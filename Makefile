@@ -120,7 +120,7 @@ docbook:  copyimages
 	#
 	mkdir -p $(BUILDDIR)
 	asciidoc $(V) $(VERS) $(IMPDIR) --backend docbook --attribute docinfo --doctype book --conf-file=$(CONFDIR)/asciidoc.conf --conf-file=$(CONFDIR)/docbook45.conf --out-file $(DOCBOOKFILE) $(SRCFILE)
-	xmllint --nonet --noout --xinclude --postvalid $(DOCBOOKFILE)
+	xmllint --noout --xinclude --postvalid $(DOCBOOKFILE)
 
 docbook-shortinfo:  copyimages
 	#
@@ -130,7 +130,7 @@ docbook-shortinfo:  copyimages
 	#
 	mkdir -p $(BUILDDIR)
 	asciidoc $(V) $(VERS) $(IMPDIR) --backend docbook --attribute docinfo1 --doctype book --conf-file=$(CONFDIR)/asciidoc.conf --conf-file=$(CONFDIR)/docbook45.conf --out-file $(DOCBOOKSHORTINFOFILE) $(SRCFILE)
-	xmllint --nonet --noout --xinclude --postvalid $(DOCBOOKSHORTINFOFILE)
+	xmllint --noout --xinclude --postvalid $(DOCBOOKSHORTINFOFILE)
 
 pdf:  docbook copyimages
 	#
