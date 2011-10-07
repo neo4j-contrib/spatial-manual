@@ -15,6 +15,7 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format">
 <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"/>
 <xsl:import href="common.xsl"/>
+<xsl:param name="qanda.defaultlabel">qanda</xsl:param>
 
 <xsl:param name="fop1.extensions" select="1" />
 <xsl:param name="variablelist.as.blocks" select="1" />
@@ -27,7 +28,7 @@
 <!-- justify, left or right -->
 <xsl:param name="alignment">left</xsl:param>
 
-<xsl:param name="body.font.family" select="'serif'"/>
+<xsl:param name="body.font.family" select="'FreeSerif'"/> <!-- neo -->
 <xsl:param name="body.font.master">12</xsl:param>
 <xsl:param name="body.font.size">
  <xsl:value-of select="$body.font.master"/><xsl:text>pt</xsl:text>
@@ -163,47 +164,114 @@
 
 <xsl:param name="generate.section.toc.level" select="0"></xsl:param>
 
-<xsl:param name="body.font.family" select="'serif'"/>
-<xsl:param name="body.font.master">12</xsl:param>
-<xsl:param name="body.font.size">
- <xsl:value-of select="$body.font.master"/><xsl:text>pt</xsl:text>
-</xsl:param>
+<xsl:param name="title.font.family" select="'FreeSans'"/>
+<xsl:param name="monospace.font.family" select="'Inconsolata'"/>
+
+<!-- turned off due to https://issues.apache.org/bugzilla/show_bug.cgi?id=37579 -->
+<xsl:param name="ulink.footnotes" select="0"></xsl:param>
+
+<xsl:param name="ulink.show" select="1"></xsl:param>
+
+<xsl:attribute-set name="xref.properties">
+  <xsl:attribute name="color">blue</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="normal.para.spacing">
+  <xsl:attribute name="space-before.optimum">0em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.4em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.6em</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="section.title.properties">
+  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">1.0em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.3em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.2em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.4em</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="list.item.spacing">
+  <xsl:attribute name="space-before.optimum">0.20em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.15em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.25em</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="variablelist.term.properties">
+  <xsl:attribute name="space-before.optimum">0.20em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.15em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.25em</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:param name="variablelist.as.blocks" select="0"></xsl:param>
+
+<xsl:param name="header.column.widths">1 10 1</xsl:param>
+
+<xsl:attribute-set name="formal.title.properties" use-attribute-sets="normal.para.spacing">
+  <xsl:attribute name="font-size">12pt</xsl:attribute>
+  <xsl:attribute name="font-weight">normal</xsl:attribute>
+  <xsl:attribute name="font-style">italic</xsl:attribute>
+  <xsl:attribute name="hyphenate">false</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">1.0em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.10em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.15em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.20em</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="formal.object.properties">
+  <xsl:attribute name="space-before.minimum">0em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.4em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.6em</xsl:attribute>
+  <xsl:attribute name="keep-together.within-column">always</xsl:attribute>
+</xsl:attribute-set>
 
 <xsl:attribute-set name="section.title.level1.properties">
-  <xsl:attribute name="font-size">
-    <xsl:value-of select="24"></xsl:value-of>
-    <xsl:text>pt</xsl:text>
-  </xsl:attribute>
+  <xsl:attribute name="font-size">18pt</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.15em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.10em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.20em</xsl:attribute>
 </xsl:attribute-set>
 <xsl:attribute-set name="section.title.level2.properties">
-  <xsl:attribute name="font-size">
-    <xsl:value-of select="18"></xsl:value-of>
-    <xsl:text>pt</xsl:text>
-  </xsl:attribute>
+  <xsl:attribute name="font-size">14pt</xsl:attribute>
 </xsl:attribute-set>
 <xsl:attribute-set name="section.title.level3.properties">
   <xsl:attribute name="font-size">
-    <xsl:value-of select="16"></xsl:value-of>
+    <xsl:value-of select="$body.font.master"></xsl:value-of>
     <xsl:text>pt</xsl:text>
   </xsl:attribute>
 </xsl:attribute-set>
 <xsl:attribute-set name="section.title.level4.properties">
   <xsl:attribute name="font-size">
-    <xsl:value-of select="14"></xsl:value-of>
+    <xsl:value-of select="$body.font.master"></xsl:value-of>
     <xsl:text>pt</xsl:text>
   </xsl:attribute>
+  <xsl:attribute name="font-weight">normal</xsl:attribute>
+  <xsl:attribute name="font-style">italic</xsl:attribute>
 </xsl:attribute-set>
 <xsl:attribute-set name="section.title.level5.properties">
-  <xsl:attribute name="font-size">
-    <xsl:value-of select="$body.font.master"></xsl:value-of>
-    <xsl:text>pt</xsl:text>
-  </xsl:attribute>
+  <xsl:attribute name="font-size">10pt</xsl:attribute>
 </xsl:attribute-set>
 <xsl:attribute-set name="section.title.level6.properties">
-  <xsl:attribute name="font-size">
-    <xsl:value-of select="$body.font.master"></xsl:value-of>
-    <xsl:text>pt</xsl:text>
-  </xsl:attribute>
+  <xsl:attribute name="font-size">10pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="section.level1.properties">
+  <xsl:attribute name="break-before">page</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="component.title.properties">
+  <xsl:attribute name="font-size">18pt</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">1.0em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">1.0em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">1.0em</xsl:attribute>
 </xsl:attribute-set>
 
 <xsl:template match="row/entry/simpara/literal">
@@ -267,5 +335,69 @@
  </xsl:call-template>
 </xsl:template>
 
+<!-- included to replace [square brackets] with <angle brackets> -->
+<xsl:template name="hyperlink.url.display">
+  <!-- * This template is called for all external hyperlinks (ulinks and -->
+  <!-- * for all simple xlinks); it determines whether the URL for the -->
+  <!-- * hyperlink is displayed, and how to display it (either inline or -->
+  <!-- * as a numbered footnote). -->
+  <xsl:param name="url"/>
+  <xsl:param name="ulink.url">
+    <!-- * ulink.url is just the value of the URL wrapped in 'url(...)' -->
+    <xsl:call-template name="fo-external-image">
+      <xsl:with-param name="filename" select="$url"/>
+    </xsl:call-template>
+  </xsl:param>
+
+  <xsl:if test="count(child::node()) != 0
+                and string(.) != $url
+                and $ulink.show != 0">
+    <!-- * Display the URL for this hyperlink only if it is non-empty, -->
+    <!-- * and the value of its content is not a URL that is the same as -->
+    <!-- * URL it links to, and if ulink.show is non-zero. -->
+    <xsl:choose>
+      <xsl:when test="$ulink.footnotes != 0 and not(ancestor::footnote)">
+        <!-- * ulink.show and ulink.footnote are both non-zero; that -->
+        <!-- * means we display the URL as a footnote (instead of inline) -->
+        <fo:footnote>
+          <xsl:call-template name="ulink.footnote.number"/>
+          <fo:footnote-body xsl:use-attribute-sets="footnote.properties">
+            <fo:block>
+              <xsl:call-template name="ulink.footnote.number"/>
+              <xsl:text> </xsl:text>
+              <fo:basic-link external-destination="{$ulink.url}">
+                <xsl:value-of select="$url"/>
+              </fo:basic-link>
+            </fo:block>
+          </fo:footnote-body>
+        </fo:footnote>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- * ulink.show is non-zero, but ulink.footnote is not; that -->
+        <!-- * means we display the URL inline -->
+        <fo:inline hyphenate="false">
+          <!-- * put square brackets around the URL -->
+          <xsl:text> &lt;</xsl:text>
+          <fo:basic-link external-destination="{$ulink.url}">
+            <xsl:call-template name="hyphenate-url">
+              <xsl:with-param name="url" select="$url"/>
+            </xsl:call-template>
+          </fo:basic-link>
+          <xsl:text>&gt;</xsl:text>
+        </fo:inline>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:if>
+
+</xsl:template>
+
+<xsl:attribute-set name="informalfigure.properties">
+  <xsl:attribute name="text-align">center</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="figure.properties">
+  <xsl:attribute name="text-align">center</xsl:attribute>
+</xsl:attribute-set>
 
 </xsl:stylesheet>
+

@@ -1,39 +1,20 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:template name="user.head.content">
-<xsl:text disable-output-escaping="yes">
+  <xsl:text disable-output-escaping="yes">
 <![CDATA[
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
 
 <link href="css/shCore.css" rel="stylesheet" type="text/css" />
 <link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
 <link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
-
-<style type="text/css">
-span.remark {
-  background: yellow;
-}
-td p {
-  margin: 0.125em 0;
-}
-#disqus_thread {
-  max-width: 40em;
-}
-body #toolbar_item command_help {
-  /* display: none !important; */
-}
-.syntaxhighlighter a,
-.syntaxhighlighter div,
-.syntaxhighlighter code,
-.syntaxhighlighter table,
-.syntaxhighlighter table td,
-.syntaxhighlighter table tr,
-.syntaxhighlighter table tbody,
-.syntaxhighlighter table thead,
-.syntaxhighlighter table caption,
-.syntaxhighlighter textarea {
-  font-size: 14px !important;
-}
-</style>
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
 
 <!-- Syntax Highlighter -->
 
@@ -43,12 +24,13 @@ body #toolbar_item command_help {
 <script type="text/javascript" src="js/shBrushBash.js"></script>
 <script type="text/javascript" src="js/shBrushPlain.js"></script>
 <script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
 
 <!-- activate when needed
-<script type="text/javascript" src="js/shBrushPython.js"></script>
 <script type="text/javascript" src="js/shBrushRuby.js"></script>
 <script type="text/javascript" src="js/shBrushCSharp.js"></script>
-<script type="text/javascript" src="js/shBrushGroovy.js"></script>
 -->
  
 <script type="text/javascript">
@@ -57,8 +39,25 @@ body #toolbar_item command_help {
   SyntaxHighlighter.defaults['toolbar'] = false;
   SyntaxHighlighter.all()
 </script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+<!-- Version Switcher -->
+
+<script type="text/javascript" src="js/versionswitcher.js"></script>
+
 ]]>
-</xsl:text>
+  </xsl:text>
 </xsl:template>
 
 </xsl:stylesheet>
