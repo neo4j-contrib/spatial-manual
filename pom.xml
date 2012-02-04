@@ -19,7 +19,7 @@
     <docs.sources>${project.build.directory}/docs</docs.sources>
     <docs.test-sources>${project.build.directory}/test-sources</docs.test-sources>
     <docs.images>${project.build.outputDirectory}/images</docs.images>
-    <neo4j-spatial.version>0.7</neo4j-spatial.version>
+    <neo4j-spatial.version>0.8-SNAPSHOT</neo4j-spatial.version>
   </properties>
 
   <scm>
