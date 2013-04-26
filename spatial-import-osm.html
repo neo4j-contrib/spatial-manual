@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4.2. Importing an Open Street Map file</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="Neo4j Spatial v0.9-SNAPSHOT" /><link rel="up" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="prev" href="spatial-import-shapefile.html" title="4.1. Importing a shapefile" /><link rel="next" href="spatial-spatial-query.html" title="4.3. Executing a spatial query" /><link rel="preface" href="spatial-introduction.html" title="Introduction" /><link rel="chapter" href="spatial-indexing.html" title="Chapter 1. Index and Querying" /><link rel="chapter" href="spatial-layers.html" title="Chapter 2. Layers and GeometryEncoders" /><link rel="chapter" href="spatial-geoserver.html" title="Chapter 3. Neo4j Spatial Geoserver Plugin" /><link rel="chapter" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="copyright" href="ln-idp4454960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+
+</head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="spatial-import-shapefile.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="spatial-spatial-query.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="spatial-import-osm"></a>4.2. Importing an Open Street Map file</h2></div></div></div><p>This is more complex because the current OSMImporter class runs in two phases, the first requiring a batch-inserter on the database.
+The is ongoing work to allow for a non-batch-inserter on the entire process, and possibly when you have read this that will already be available.
+Refer to the unit tests in classes <code class="literal">TestDynamicLayers</code> and <code class="literal">TestOSMImport</code> for the latest code for importing OSM data. For example:</p><pre class="programlisting brush: java">OSMImporter importer = new OSMImporter("map.osm");
+importer.setCharset(Charset.forName("UTF-8"));
+BatchInserter batchInserter = new BatchInserterImpl(databasePath);
+importer.importFile(batchInserter, "map.osm", false);
+batchInserter.shutdown();
+
+GraphDatabaseService db = new EmbeddedGraphDatabase(databasePath);
+importer.reIndex(db);
+db.shutdown();
+</pre><p>This code will import the map.osm Open Street Map file, populating the database with a little over 200 geometries, including streets, buildings and points of interest.</p></div><HR xmlns=""></HR><a xmlns="" href="ln-idp4454960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2011 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spatial-import-shapefile.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="spatial-examples.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="spatial-spatial-query.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

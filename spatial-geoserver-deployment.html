@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.2. Deployment into Geoserver</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="Neo4j Spatial v0.9-SNAPSHOT" /><link rel="up" href="spatial-geoserver.html" title="Chapter 3. Neo4j Spatial Geoserver Plugin" /><link rel="prev" href="spatial-geoserver-building.html" title="3.1. Building" /><link rel="next" href="spatial-geoserver-trunk.html" title="3.3. Testing in GeoServer trunk" /><link rel="preface" href="spatial-introduction.html" title="Introduction" /><link rel="chapter" href="spatial-indexing.html" title="Chapter 1. Index and Querying" /><link rel="chapter" href="spatial-layers.html" title="Chapter 2. Layers and GeometryEncoders" /><link rel="chapter" href="spatial-geoserver.html" title="Chapter 3. Neo4j Spatial Geoserver Plugin" /><link rel="chapter" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="copyright" href="ln-idp4454960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+
+</head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="spatial-geoserver-building.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="spatial-geoserver-trunk.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="spatial-geoserver-deployment"></a>3.2. Deployment into Geoserver</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+unzip the <code class="literal">target/xxxx-server-plugin.zip</code> into $GEOSERVER_HOME/webapps/geoserver/WEB-INF/lib
+</li><li class="listitem">
+restart geoserver
+</li><li class="listitem">
+configure a new workspace
+</li><li class="listitem">
+configure a new datasource neo4j in your workspace. Point the "The directory path of the Neo4j database:" parameter to the relative (form the GeoServer working dir) or aboslute path to a Neo4j Spatial database with layers (see <a class="ulink" href="https://github.com/neo4j/spatial" target="_top">Neo4j Spatial</a>)
+</li><li class="listitem">
+in Layers, do "Add new resource" and choose your Neo4j datastore to see the exisitng Neo4j Spatial layers and add them.
+</li></ul></div></div><HR xmlns=""></HR><a xmlns="" href="ln-idp4454960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2011 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spatial-geoserver-building.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="spatial-geoserver.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="spatial-geoserver-trunk.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

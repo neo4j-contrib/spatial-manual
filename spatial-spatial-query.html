@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4.3. Executing a spatial query</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="Neo4j Spatial v0.9-SNAPSHOT" /><link rel="up" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="prev" href="spatial-import-osm.html" title="4.2. Importing an Open Street Map file" /><link rel="next" href="spatial-export-shapefile.html" title="4.4. Export a shapefile" /><link rel="preface" href="spatial-introduction.html" title="Introduction" /><link rel="chapter" href="spatial-indexing.html" title="Chapter 1. Index and Querying" /><link rel="chapter" href="spatial-layers.html" title="Chapter 2. Layers and GeometryEncoders" /><link rel="chapter" href="spatial-geoserver.html" title="Chapter 3. Neo4j Spatial Geoserver Plugin" /><link rel="chapter" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="copyright" href="ln-idp4454960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+
+</head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="spatial-import-osm.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="spatial-export-shapefile.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="spatial-spatial-query"></a>4.3. Executing a spatial query</h2></div></div></div><p>Assuming you imported the map.osm file as in the previous example, you can now perform spatial searches on the data. The following example will search within a rectangle for a whatever geometries it can find:</p><pre class="programlisting brush: java">GraphDatabaseService database = new EmbeddedGraphDatabase(databasePath);
+try {
+    SpatialDatabaseService spatialService = new SpatialDatabaseService(database);
+    Layer layer = spatialService.getLayer("map.osm");
+    LayerIndexReader spatialIndex = layer.getIndex();
+    System.out.println("Have " + spatialIndex.count() + " geometries in " + spatialIndex.getBoundingBox());
+
+    Envelope bbox = new Envelope(12.94, 12.96, 56.04, 56.06);
+    List&lt;SpatialDatabaseRecord&gt; results = GeoPipeline
+        .startIntersectWindowSearch(layer, bbox)
+        .toSpatialDatabaseRecordList();
+
+    doGeometryTestsOnResults(bbox, results);
+} finally {
+    database.shutdown();
+}
+</pre><p>For more examples of query code, refer to the test code in the <code class="literal">LayerTest</code> and the <code class="literal">SpatialTest</code> classes.
+Also review the classes in the <code class="literal">org.neo4j.gis.spatial.query package</code> for the full range or search queries currently implemented.</p></div><HR xmlns=""></HR><a xmlns="" href="ln-idp4454960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2011 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spatial-import-osm.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="spatial-examples.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="spatial-export-shapefile.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

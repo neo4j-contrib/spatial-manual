@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4.4. Export a shapefile</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="Neo4j Spatial v0.9-SNAPSHOT" /><link rel="up" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="prev" href="spatial-spatial-query.html" title="4.3. Executing a spatial query" /><link rel="next" href="spatial-udig.html" title="4.5. Using Neo4j Spatial with uDig" /><link rel="preface" href="spatial-introduction.html" title="Introduction" /><link rel="chapter" href="spatial-indexing.html" title="Chapter 1. Index and Querying" /><link rel="chapter" href="spatial-layers.html" title="Chapter 2. Layers and GeometryEncoders" /><link rel="chapter" href="spatial-geoserver.html" title="Chapter 3. Neo4j Spatial Geoserver Plugin" /><link rel="chapter" href="spatial-examples.html" title="Chapter 4. Examples" /><link rel="copyright" href="ln-idp4454960.html" title="License: Creative Commons 3.0" />
+
+
+<!-- favicon -->
+
+<link rel="shortcut icon" href="http://neo4j.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="http://neo4j.org/favicon.ico" type="image/x-icon" />
+
+<!-- style -->
+
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeEclipse.css" rel="stylesheet" type="text/css" />
+<link href="css/neo.css" rel="stylesheet" type="text/css" />
+
+<!-- Syntax Highlighter -->
+
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushJava.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushBash.js"></script>
+<script type="text/javascript" src="js/shBrushPlain.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushGroovy.js"></script>
+<script type="text/javascript" src="js/shBrushCypher.js"></script>
+<script type="text/javascript" src="js/shBrushPython.js"></script>
+
+<!-- activate when needed
+<script type="text/javascript" src="js/shBrushRuby.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+-->
+ 
+<script type="text/javascript">
+  SyntaxHighlighter.defaults['tab-size'] = 4;
+  SyntaxHighlighter.defaults['gutter'] = false;
+  SyntaxHighlighter.defaults['toolbar'] = false;
+  SyntaxHighlighter.all()
+</script>
+
+<!-- JQuery -->
+
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+
+<!-- Image Scaler -->
+
+<script type="text/javascript" src="js/imagescaler.js"></script>
+
+<!-- Table Styler -->
+
+<script type="text/javascript" src="js/tablestyler.js"></script>
+
+
+</head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="spatial-spatial-query.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="spatial-udig.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="spatial-export-shapefile"></a>4.4. Export a shapefile</h2></div></div></div><p>The ESRI Shapefile that we imported in the first example above was actually created by Neo4j-Spatial. It is possible to use the results of a query, or a DynamicLayer, to create a new Shapefile using the ShapefileExporter. If we were to export the complete layer created from importing a shapefile, we would not achieve much, but we can could use this capability to create shapefiles that are subsets of other layers, or that are created from data in another format.</p><pre class="programlisting brush: java">SpatialDatabaseService spatialService = new SpatialDatabaseService(database);
+OSMLayer layer = (OSMLayer) spatialService.getLayer("map.osm");
+DynamicLayerConfig wayLayer = layer.addSimpleDynamicLayer(Constants.GTYPE_LINESTRING);
+ShapefileExporter shpExporter = new ShapefileExporter(database);
+shpExporter.exportLayer(wayLayer.getName());
+</pre><p>This example shows how we can import an OSM dataset, which contains data with a number of different Geometry types, and then by using a DynamicLayer to select for only geometries of type <span class="emphasis"><em>LineString</em></span>, we can export all the OSM ways to a Shapefile. This is particularly important when you consider that ESRI Shapefile format does not allow more than one Geometry type per shapefile.</p><pre class="programlisting brush: java">SpatialDatabaseService spatialService = new SpatialDatabaseService(database);
+Layer layer = spatialService.getLayer("map.osm");
+LayerIndexReader spatialIndex = layer.getIndex();
+System.out.println("Have " + spatialIndex.count() + " geometries in " + spatialIndex.getBoundingBox());
+
+Envelope bbox = new Envelope(12.94, 12.96, 56.04, 56.06);
+List&lt;SpatialDatabaseRecord&gt; results = GeoPipeline
+    .startIntersectWindowSearch(layer, bbox)
+    .toSpatialDatabaseRecordList();
+
+spatialService.createResultsLayer("results", results);
+ShapefileExporter shpExporter = new ShapefileExporter(database);
+shpExporter.exportLayer("results");
+</pre><p>This time we import the same OSM model, but query for all geometries inside a envelope, and export that to a new Shapefile.</p></div><HR xmlns=""></HR><a xmlns="" href="ln-idp4454960.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2011 Neo Technology</p></a><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spatial-spatial-query.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="spatial-examples.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="spatial-udig.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
